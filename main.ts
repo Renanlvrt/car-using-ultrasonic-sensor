@@ -1,19 +1,19 @@
 function obstacle_detected() {
-    // motobit.invert(Motor.LEFT, False)
-    // motobit.invert(Motor.RIGHT, False)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
-    motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
+    motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 60)
     pause(2000)
     pins.servoWritePin(AnalogPin.P15, 37)
     pause(2000)
     pins.servoWritePin(AnalogPin.P15, 160)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
-    motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
+    motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 60)
 }
 
 // TURN LEFT: pins.servo_write_pin(AnalogPin.P15, 37)
 // TURN RIGHT: pins.servo_write_pin(AnalogPin.P15, 160)
 // neutral: pins.servo_write_pin(AnalogPin.P15, 90)
+motobit.invert(Motor.Left, true)
+motobit.invert(Motor.Right, true)
 function enable_distance(distance: number) {
     // led.enable(True)
     // led.plot(0, 0)
@@ -60,7 +60,7 @@ function enable_distance(distance: number) {
             led.unplot(2, 1)
             led.unplot(3, 1)
             motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
-            motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+            motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
         }
         
     }
@@ -69,9 +69,12 @@ function enable_distance(distance: number) {
 
 basic.forever(function on_forever() {
     let distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
-    if (distance <= 4000) {
+    if (distance <= 1000) {
         enable_distance(distance)
     } else {
+        pins.servoWritePin(AnalogPin.P15, 90)
+        motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+        motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
         // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
         basic.clearScreen()
     }
@@ -80,8 +83,9 @@ basic.forever(function on_forever() {
     
 })
 input.onButtonPressed(Button.A, function button_a_pressed() {
+    motobit.enable(MotorPower.On)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
-    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
     
 })
 input.onButtonPressed(Button.B, function button_b_pressed() {
