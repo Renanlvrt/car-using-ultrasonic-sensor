@@ -249,8 +249,8 @@ basic.forever(on_forever)"""
 def on_button_pressed_a():
     global on
     motobit.enable(MotorPower.ON)
-    motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
-    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 100)
+    motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
     on = True
 
 input.on_button_pressed(Button.A, on_button_pressed_a)
@@ -258,7 +258,7 @@ input.on_button_pressed(Button.A, on_button_pressed_a)
 def on_button_pressed_b():
     global on
     pins.servo_write_pin(AnalogPin.P15, 90)
-    pause(1000)
+    pause(100)
     motobit.enable(MotorPower.OFF)
     led.unplot(0, 0)
     on = False
@@ -296,17 +296,17 @@ def on_forever():
                 manouvering = True
                 motobit.enable(MotorPower.ON)
                 led.plot(2, 2)
-                if distance < 1500:
+                if distance < 2000:
                     led.plot(2, 1)
                     led.plot(2, 2)
                     led.plot(2, 3)
                     led.plot(1, 2)
                     led.plot(3, 2)
                     pins.servo_write_pin(AnalogPin.P15, 160)
-                    pause(500)
-                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.REVERSE, 100)
-                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.REVERSE, 100)
-                    pause(3000)
+                    pause(50)
+                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.REVERSE, 60)
+                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.REVERSE, 60)
+                    pause(300)
                     # pins.servo_write_pin(AnalogPin.P15, 37)
                     # motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
                     # motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
@@ -319,13 +319,13 @@ def on_forever():
                 else:
                     pins.servo_write_pin(AnalogPin.P15, 37)
                     pause(1000)
-                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
-                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
+                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 30)
+                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 30)
                     led.unplot(2, 2)
             ##manouvering2 = False
             pins.servo_write_pin(AnalogPin.P15, 90)
-            motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
-            motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 100)
+            motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+            motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
             # motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
             basic.clear_screen()
             #not to forget to update manouvering
