@@ -94,29 +94,36 @@ input.on_button_pressed(Button.B, button_b_pressed)
 motobit.invert(Motor.Left, true)
 motobit.invert(Motor.Right, true)
 motobit.enable(MotorPower.Off)
+let distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
 let manouvering = false
+let on = false
 basic.forever(function on_forever() {
     let manouvering: boolean;
     let distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
     serial.writeNumber(distance)
     if (!manouvering) {
-        while (distance < 1500) {
-            led.plot(2, 2)
-            distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
-            serial.writeNumber(distance)
+        while (distance < 2500) {
             manouvering = true
             motobit.enable(MotorPower.On)
-            motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
-            motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 60)
-            pause(2000)
-            pins.servoWritePin(AnalogPin.P15, 37)
-            pause(2000)
-            pins.servoWritePin(AnalogPin.P15, 160)
-            motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
-            motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
-            pause(1000)
-            led.unplot(2, 2)
+            if (distance < 1500) {
+                pins.servoWritePin(AnalogPin.P15, 160)
+                motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 100)
+                motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 100)
+                pause(4000)
+                // pins.servo_write_pin(AnalogPin.P15, 37)
+                // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+                // motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
+                // pause(1000)
+                led.unplot(2, 2)
+            } else {
+                pins.servoWritePin(AnalogPin.P15, 37)
+                pause(1000)
+                motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
+                motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
+            }
+            
         }
+        manouvering = false
         pins.servoWritePin(AnalogPin.P15, 90)
         motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
         motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
@@ -131,10 +138,12 @@ input.onButtonPressed(Button.A, function button_a_pressed() {
     motobit.enable(MotorPower.On)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
+    let on = true
     
 })
 input.onButtonPressed(Button.B, function button_b_pressed() {
     pins.servoWritePin(AnalogPin.P15, 90)
     motobit.enable(MotorPower.Off)
+    let on = false
     
 })
