@@ -101,34 +101,38 @@ basic.forever(function on_forever() {
     let manouvering: boolean;
     let distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
     serial.writeNumber(distance)
-    if (!manouvering) {
-        while (distance < 2500) {
-            manouvering = true
-            motobit.enable(MotorPower.On)
-            if (distance < 1500) {
-                pins.servoWritePin(AnalogPin.P15, 160)
-                motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 100)
-                motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 100)
-                pause(4000)
-                // pins.servo_write_pin(AnalogPin.P15, 37)
-                // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
-                // motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
-                // pause(1000)
-                led.unplot(2, 2)
-            } else {
-                pins.servoWritePin(AnalogPin.P15, 37)
-                pause(1000)
-                motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
-                motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
+    if (on) {
+        if (!manouvering) {
+            while (distance < 2500) {
+                manouvering = true
+                motobit.enable(MotorPower.On)
+                if (distance < 1500) {
+                    pins.servoWritePin(AnalogPin.P15, 160)
+                    pause(1000)
+                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 100)
+                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 100)
+                    pause(4000)
+                    // pins.servo_write_pin(AnalogPin.P15, 37)
+                    // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+                    // motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
+                    // pause(1000)
+                    led.unplot(2, 2)
+                } else {
+                    pins.servoWritePin(AnalogPin.P15, 37)
+                    pause(1000)
+                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
+                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
+                }
+                
             }
-            
+            manouvering = false
+            pins.servoWritePin(AnalogPin.P15, 90)
+            motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+            motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
+            // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
+            basic.clearScreen()
         }
-        manouvering = false
-        pins.servoWritePin(AnalogPin.P15, 90)
-        motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
-        motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
-        // motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
-        basic.clearScreen()
+        
     }
     
     // serial.writeNumber(sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS));

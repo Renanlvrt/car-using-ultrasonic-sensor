@@ -104,33 +104,35 @@ on = False
 def on_forever():
     distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS)
     serial.write_number(distance)
-    if not manouvering:
-        while distance < 2500 :
-            manouvering = True
-            motobit.enable(MotorPower.ON)
-            if distance < 1500:
-                pins.servo_write_pin(AnalogPin.P15, 160)
-                motobit.set_motor_speed(Motor.LEFT, MotorDirection.REVERSE, 100)
-                motobit.set_motor_speed(Motor.RIGHT, MotorDirection.REVERSE, 100)
-                pause(4000)
-                #pins.servo_write_pin(AnalogPin.P15, 37)
-                #motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
-                #motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
-                #pause(1000)
-                led.unplot(2, 2)
-            else: 
-                pins.servo_write_pin(AnalogPin.P15, 37)
-                pause(1000)
-                motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
-                motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
-                
-        manouvering = False
-        pins.servo_write_pin(AnalogPin.P15, 90)
-        motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
-        motobit.set_motor_speed(Motor.Right, MotorDirection.FORWARD, 100)
-        #motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
-        basic.clear_screen()
-        #serial.writeNumber(sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS));
+    if on :
+        if not manouvering:
+            while distance < 2500 :
+                manouvering = True
+                motobit.enable(MotorPower.ON)
+                if distance < 1500:
+                    pins.servo_write_pin(AnalogPin.P15, 160)
+                    pause(1000)
+                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.REVERSE, 100)
+                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.REVERSE, 100)
+                    pause(4000)
+                    #pins.servo_write_pin(AnalogPin.P15, 37)
+                    #motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+                    #motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
+                    #pause(1000)
+                    led.unplot(2, 2)
+                else: 
+                    pins.servo_write_pin(AnalogPin.P15, 37)
+                    pause(1000)
+                    motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
+                    motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
+                    
+            manouvering = False
+            pins.servo_write_pin(AnalogPin.P15, 90)
+            motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
+            motobit.set_motor_speed(Motor.Right, MotorDirection.FORWARD, 100)
+            #motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
+            basic.clear_screen()
+            #serial.writeNumber(sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS));
     pass
 basic.forever(on_forever)
 
