@@ -14,6 +14,7 @@ def obstacle_detected():
 motobit.invert(Motor.LEFT, True)
 motobit.invert(Motor.RIGHT, True)
 def enable_distance(distance):
+    motobit.enable(MotorPower.ON)
     #led.enable(True)
     #led.plot(0, 0)
     if distance <= 3000:

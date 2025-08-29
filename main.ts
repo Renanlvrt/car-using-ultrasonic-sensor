@@ -15,6 +15,7 @@ function obstacle_detected() {
 motobit.invert(Motor.Left, true)
 motobit.invert(Motor.Right, true)
 function enable_distance(distance: number) {
+    motobit.enable(MotorPower.On)
     // led.enable(True)
     // led.plot(0, 0)
     if (distance <= 3000) {
