@@ -249,6 +249,8 @@ input.onButtonPressed(Button.A, function on_button_pressed_a() {
     motobit.enable(MotorPower.On)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
+    motobit.invert(Motor.Left, true)
+    motobit.invert(Motor.Right, true)
     on = true
 })
 input.onButtonPressed(Button.B, function on_button_pressed_b() {
@@ -315,10 +317,10 @@ basic.forever(function on_forever() {
                     led.unplot(3, 2)
                 } else {
                     // to avoid turning while going forward
-                    motobit.enable(MotorPower.Off)
+                    // motobit.enable(MotorPower.OFF)
                     pins.servoWritePin(AnalogPin.P15, 37)
-                    pause(300)
-                    motobit.enable(MotorPower.On)
+                    // pause(300)
+                    // motobit.enable(MotorPower.ON)
                     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 70)
                     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 70)
                     led.unplot(2, 2)

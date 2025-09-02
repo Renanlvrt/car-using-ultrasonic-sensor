@@ -251,6 +251,8 @@ def on_button_pressed_a():
     motobit.enable(MotorPower.ON)
     motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
     motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 100)
+    motobit.invert(Motor.LEFT, True)
+    motobit.invert(Motor.RIGHT, True)
     on = True
 
 input.on_button_pressed(Button.A, on_button_pressed_a)
@@ -322,10 +324,10 @@ def on_forever():
                     led.unplot(3, 2)
                 else:
                     #to avoid turning while going forward
-                    motobit.enable(MotorPower.OFF)
+                    #motobit.enable(MotorPower.OFF)
                     pins.servo_write_pin(AnalogPin.P15, 37)
-                    pause(300)
-                    motobit.enable(MotorPower.ON)
+                    #pause(300)
+                    #motobit.enable(MotorPower.ON)
                     motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 70)
                     motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 70)
                     led.unplot(2, 2)
