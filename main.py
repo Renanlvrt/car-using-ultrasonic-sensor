@@ -335,7 +335,7 @@ def on_forever():
                     #motobit.enable(MotorPower.ON)
                     motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 70)
                     motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 70)
-                    pause(700)
+                    pause(350)
                     led.unplot(2, 2)
             ##manouvering2 = False
             motobit.enable(MotorPower.OFF)

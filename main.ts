@@ -328,7 +328,7 @@ basic.forever(function on_forever() {
                     // motobit.enable(MotorPower.ON)
                     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 70)
                     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 70)
-                    pause(700)
+                    pause(350)
                     led.unplot(2, 2)
                 }
                 
