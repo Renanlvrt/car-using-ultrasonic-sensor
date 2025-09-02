@@ -247,8 +247,8 @@ basic.forever(on_forever)
 input.onButtonPressed(Button.A, function on_button_pressed_a() {
     
     motobit.enable(MotorPower.On)
-    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
-    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
+    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
     on = true
 })
 input.onButtonPressed(Button.B, function on_button_pressed_b() {
@@ -284,6 +284,7 @@ basic.forever(function on_forever() {
     if (on) {
         if (!manouvering) {
             while (distance < 2500) {
+                led.unplot(0, 0)
                 // not to forget to update distance in the while
                 distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
                 manouvering = true
@@ -295,11 +296,14 @@ basic.forever(function on_forever() {
                     led.plot(2, 3)
                     led.plot(1, 2)
                     led.plot(3, 2)
+                    // again same problem
+                    motobit.enable(MotorPower.Off)
                     pins.servoWritePin(AnalogPin.P15, 160)
-                    pause(50)
-                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 60)
-                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 60)
                     pause(300)
+                    motobit.enable(MotorPower.On)
+                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Reverse, 100)
+                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Reverse, 100)
+                    pause(1000)
                     //  pins.servo_write_pin(AnalogPin.P15, 37)
                     //  motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 60)
                     //  motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 60)
@@ -310,18 +314,23 @@ basic.forever(function on_forever() {
                     led.unplot(1, 2)
                     led.unplot(3, 2)
                 } else {
+                    // to avoid turning while going forward
+                    motobit.enable(MotorPower.Off)
                     pins.servoWritePin(AnalogPin.P15, 37)
-                    pause(1000)
-                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 30)
-                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 30)
+                    pause(300)
+                    motobit.enable(MotorPower.On)
+                    motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 70)
+                    motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 70)
                     led.unplot(2, 2)
                 }
                 
             }
             // #manouvering2 = False
+            motobit.enable(MotorPower.Off)
             pins.servoWritePin(AnalogPin.P15, 90)
-            motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 60)
-            motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 60)
+            motobit.enable(MotorPower.On)
+            motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
+            motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
             //  motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 50)
             basic.clearScreen()
             // not to forget to update manouvering
