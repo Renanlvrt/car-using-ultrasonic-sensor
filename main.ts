@@ -249,8 +249,6 @@ input.onButtonPressed(Button.A, function on_button_pressed_a() {
     motobit.enable(MotorPower.On)
     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 100)
     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 100)
-    motobit.invert(Motor.Left, true)
-    motobit.invert(Motor.Right, true)
     on = true
 })
 input.onButtonPressed(Button.B, function on_button_pressed_b() {
@@ -273,6 +271,8 @@ let distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
 serial.writeValue("distance", distance)
 //  serial.writeNumber(sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS));
 basic.forever(function on_forever() {
+    motobit.invert(Motor.Left, true)
+    motobit.invert(Motor.Right, true)
     
     
     
@@ -285,14 +285,14 @@ basic.forever(function on_forever() {
     serial.writeLine("" + ("" + manouvering))
     if (on) {
         if (!manouvering) {
-            while (distance < 2500) {
+            while (distance < 3500) {
                 led.unplot(0, 0)
                 // not to forget to update distance in the while
                 distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
                 manouvering = true
                 motobit.enable(MotorPower.On)
                 led.plot(2, 2)
-                if (distance < 2000) {
+                if (distance < 1500) {
                     led.plot(2, 1)
                     led.plot(2, 2)
                     led.plot(2, 3)

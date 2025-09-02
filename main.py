@@ -251,8 +251,6 @@ def on_button_pressed_a():
     motobit.enable(MotorPower.ON)
     motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 100)
     motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 100)
-    motobit.invert(Motor.LEFT, True)
-    motobit.invert(Motor.RIGHT, True)
     on = True
 
 input.on_button_pressed(Button.A, on_button_pressed_a)
@@ -280,6 +278,8 @@ serial.write_value("distance", distance)
 # serial.writeNumber(sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS));
 
 def on_forever():
+    motobit.invert(Motor.LEFT, True)
+    motobit.invert(Motor.RIGHT, True)
     global distance
     global manouvering
     global on
@@ -292,14 +292,14 @@ def on_forever():
     serial.write_line("" + str((manouvering)))
     if on:
         if not (manouvering):
-            while distance < 2500:
+            while distance < 3500:
                 led.unplot(0, 0)
                 #not to forget to update distance in the while
                 distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS)
                 manouvering = True
                 motobit.enable(MotorPower.ON)
                 led.plot(2, 2)
-                if distance < 2000:
+                if distance < 1500:
                     led.plot(2, 1)
                     led.plot(2, 2)
                     led.plot(2, 3)
