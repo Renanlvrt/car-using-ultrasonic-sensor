@@ -293,6 +293,8 @@ def on_forever():
     if on:
         if not (manouvering):
             while distance < 3500:
+                basic.clear_screen()
+                serial.write_value("in the cycle", distance)
                 led.unplot(0, 0)
                 #not to forget to update distance in the while
                 distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MICRO_SECONDS)
@@ -300,8 +302,8 @@ def on_forever():
                 motobit.enable(MotorPower.ON)
                 led.plot(2, 2)
                 if distance < 1500:
+                    #led.plot(4,4)
                     led.plot(2, 1)
-                    led.plot(2, 2)
                     led.plot(2, 3)
                     led.plot(1, 2)
                     led.plot(3, 2)
@@ -322,14 +324,18 @@ def on_forever():
                     led.unplot(2, 3)
                     led.unplot(1, 2)
                     led.unplot(3, 2)
+                    #led.unplot(4,4)
+                    #manouvering = False
                 else:
+                    led.plot(2, 2)
                     #to avoid turning while going forward
                     #motobit.enable(MotorPower.OFF)
-                    pins.servo_write_pin(AnalogPin.P15, 37)
+                    pins.servo_write_pin(AnalogPin.P15, 30)
                     #pause(300)
                     #motobit.enable(MotorPower.ON)
                     motobit.set_motor_speed(Motor.LEFT, MotorDirection.FORWARD, 70)
                     motobit.set_motor_speed(Motor.RIGHT, MotorDirection.FORWARD, 70)
+                    pause(700)
                     led.unplot(2, 2)
             ##manouvering2 = False
             motobit.enable(MotorPower.OFF)

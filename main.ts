@@ -286,6 +286,8 @@ basic.forever(function on_forever() {
     if (on) {
         if (!manouvering) {
             while (distance < 3500) {
+                basic.clearScreen()
+                serial.writeValue("in the cycle", distance)
                 led.unplot(0, 0)
                 // not to forget to update distance in the while
                 distance = sonar.ping(DigitalPin.P12, DigitalPin.P14, PingUnit.MicroSeconds)
@@ -293,8 +295,8 @@ basic.forever(function on_forever() {
                 motobit.enable(MotorPower.On)
                 led.plot(2, 2)
                 if (distance < 1500) {
+                    // led.plot(4,4)
                     led.plot(2, 1)
-                    led.plot(2, 2)
                     led.plot(2, 3)
                     led.plot(1, 2)
                     led.plot(3, 2)
@@ -316,13 +318,17 @@ basic.forever(function on_forever() {
                     led.unplot(1, 2)
                     led.unplot(3, 2)
                 } else {
+                    // led.unplot(4,4)
+                    // manouvering = False
+                    led.plot(2, 2)
                     // to avoid turning while going forward
                     // motobit.enable(MotorPower.OFF)
-                    pins.servoWritePin(AnalogPin.P15, 37)
+                    pins.servoWritePin(AnalogPin.P15, 30)
                     // pause(300)
                     // motobit.enable(MotorPower.ON)
                     motobit.setMotorSpeed(Motor.Left, MotorDirection.Forward, 70)
                     motobit.setMotorSpeed(Motor.Right, MotorDirection.Forward, 70)
+                    pause(700)
                     led.unplot(2, 2)
                 }
                 
